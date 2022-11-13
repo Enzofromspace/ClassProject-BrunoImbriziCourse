@@ -3,7 +3,8 @@ const canvasSketch = require('canvas-sketch');
 
 //This is where the fun begins
 const settings = {
-  dimensions: [ 1080, 1080 ]
+  dimensions: [ 1080, 1080 ],
+  animate: true,
 };
 
 //Create an array called particles to store the particle objects
@@ -28,6 +29,7 @@ const sketch = ({width, height}) => {
     context.fillRect(0, 0, width, height);
 //Create the particle loop
     particles.forEach(particle => {
+      particle.update();
       particle.draw(context);
     });
 
@@ -46,8 +48,25 @@ class Particle{
       this.x = x;
       this.y = y;
 
+      this.ax = 0;
+      this.ay = 0;
+
+      this.vx = 0;
+      this.vy = 0;
+
+      this.ix = x;
+      this.iy = y;
+
       this.radius = radius;
   }
+  update(){
+      this.vx += this.ax;
+      this.vy += this.ay;
+
+      this.x += vx;
+      this.y += vy;
+  }
+
   //Under the last function but still inside of the particle class, we create a a function to draw a particle 
   draw(context){
       context.save();
@@ -62,6 +81,5 @@ class Particle{
       
       context.restore();
       
-
   }
 }
